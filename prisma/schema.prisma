@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  searches  Search[]
+  alerts    Alert[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Search {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  keywords     String[]
+  platforms    String[]
+  dateRange    DateRange?
+  location     String?
+  results      Result[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Result {
+  id          String   @id @default(cuid())
+  searchId    String
+  search      Search   @relation(fields: [searchId], references: [id])
+  platform    String
+  username    String
+  message     String
+  sentiment   String
+  leadScore   Int
+  engagement  Int
+  postedAt    DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Alert {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  keywords  String[]
+  platforms String[]
+  frequency String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DateRange {
+  id        String   @id @default(cuid())
+  searchId  String   @unique
+  search    Search   @relation(fields: [searchId], references: [id])
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
