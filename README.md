@@ -1,122 +1,169 @@
-# Social Media Data Scraper
+# Team Clock App
 
-A powerful web application for extracting and analyzing social media data, particularly focused on customer inquiries in the health and cosmetic surgery industries.
+A cross-platform mobile application (Android + iOS) for team member clock in/out functionality built with React Native and Supabase.
 
-## Features
+## Phase 1: Project Setup ✅
 
-- **Multi-Platform Data Scraping**
-  - Instagram, X (Twitter), Facebook, and LinkedIn integration
-  - Location-based search capabilities
-  - Real-time data collection
-
-- **Advanced Analytics**
-  - AI-powered sentiment analysis
-  - Lead scoring system
-  - Competitor tracking
-  - Engagement metrics
-
-- **Data Visualization**
-  - Interactive charts and graphs
-  - Customizable dashboards
-  - Trend analysis
-
-- **Smart Alerts**
-  - Real-time notifications
-  - Customizable alert conditions
-  - Multi-channel delivery (email, in-app)
-
-- **Export & Sharing**
-  - Multiple format support (Excel, PDF)
-  - One-click sharing
-  - CRM integration
-
-## Technology Stack
-
-- **Frontend**: Next.js 13, React, Material-UI
-- **Backend**: Node.js, Prisma
-- **Database**: PostgreSQL
-- **Analytics**: Natural Language Processing (natural.js)
-- **Charts**: Chart.js
+This phase includes:
+- React Native project setup
+- Supabase integration
+- Authentication (email login/signup)
+- Navigation setup with Login, Signup, and Home screens
 
 ## Prerequisites
 
-- Node.js (v16 or higher)
-- PostgreSQL
-- Social Media API keys
-- CRM API keys (optional)
+Before running this app, make sure you have the following installed:
+
+### For React Native Development:
+- Node.js (v16 or later)
+- npm or yarn
+- React Native CLI
+- Android Studio (for Android development)
+- Xcode (for iOS development, macOS only)
+
+### For Supabase:
+- A Supabase account and project
 
 ## Setup Instructions
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd social-media-scraper
-   ```
+### 1. Clone and Install Dependencies
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+```bash
+# Navigate to the project directory
+cd TeamClockApp
 
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   Fill in your API keys and database configuration in the `.env` file
+# Install dependencies
+npm install
+```
 
-4. **Set up the database**
-   ```bash
-   npx prisma migrate dev
-   ```
+### 2. Supabase Configuration
 
-5. **Start the development server**
-   ```bash
-   npm run dev
-   ```
+1. Create a new project at [supabase.com](https://supabase.com)
+2. Go to your project settings
+3. Copy your project URL and anon/public key
+4. Update the Supabase configuration in `src/services/supabase.ts`:
 
-## API Documentation
+```typescript
+const supabaseUrl = 'YOUR_SUPABASE_URL';
+const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+```
 
-### Scraping Endpoints
+### 3. Enable Email Authentication in Supabase
 
-- `POST /api/scrape`
-  - Scrapes social media data based on provided parameters
-  - Parameters: keywords, platforms, dateRange, location
+1. In your Supabase dashboard, go to Authentication > Settings
+2. Enable "Enable email confirmations" if you want email verification
+3. Configure your email templates (optional)
 
-### Alerts Endpoints
+### 4. Running the App
 
-- `POST /api/alerts`
-  - Creates a new alert
-  - Parameters: keywords, platforms, frequency, active
+#### For Android:
 
-### Reports Endpoints
+1. Make sure you have Android Studio installed and configured
+2. Start an Android emulator or connect a physical device
+3. Run the app:
 
-- `POST /api/reports`
-  - Generates customized reports
-  - Parameters: reportType, dateRange, format
+```bash
+# Start Metro bundler
+npx react-native start
 
-## Security Considerations
+# In a new terminal, run the Android app
+npx react-native run-android
+```
 
-- API keys are stored securely in environment variables
-- Data is anonymized where necessary
-- User authentication required for all operations
-- Regular security audits recommended
+#### For iOS (macOS only):
 
-## Best Practices
+1. Make sure you have Xcode installed
+2. Install iOS dependencies:
 
-- Keep API keys secure and never commit them to version control
-- Regularly update dependencies for security patches
-- Monitor API rate limits
-- Implement proper error handling
-- Regular data backups
+```bash
+cd ios && pod install && cd ..
+```
+
+3. Run the app:
+
+```bash
+# Start Metro bundler
+npx react-native start
+
+# In a new terminal, run the iOS app
+npx react-native run-ios
+```
+
+## Project Structure
+
+```
+TeamClockApp/
+├── src/
+│   ├── components/          # Reusable components
+│   ├── screens/            # Screen components
+│   │   ├── LoginScreen.tsx
+│   │   ├── SignupScreen.tsx
+│   │   └── HomeScreen.tsx
+│   ├── services/           # API and external services
+│   │   └── supabase.ts
+│   └── types/              # TypeScript type definitions
+│       └── index.ts
+├── App.tsx                 # Main app component
+└── README.md
+```
+
+## Features Implemented (Phase 1)
+
+### Authentication
+- ✅ Email/password signup
+- ✅ Email/password login
+- ✅ Sign out functionality
+- ✅ Authentication state management
+
+### Navigation
+- ✅ Login screen
+- ✅ Signup screen
+- ✅ Home screen (placeholder)
+- ✅ Stack navigation with proper routing
+
+### UI/UX
+- ✅ Modern, clean design
+- ✅ Loading states
+- ✅ Error handling
+- ✅ Form validation
+- ✅ Responsive layout
+
+## Next Steps (Future Phases)
+
+- **Phase 2**: Clock in/out functionality
+- **Phase 3**: Admin dashboard
+- **Phase 4**: Reports and analytics
+- **Phase 5**: Push notifications
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Metro bundler issues**: Clear cache with `npx react-native start --reset-cache`
+2. **Android build issues**: Clean and rebuild with `cd android && ./gradlew clean && cd ..`
+3. **iOS build issues**: Clean with `cd ios && xcodebuild clean && cd ..`
+
+### Supabase Connection Issues
+
+- Verify your Supabase URL and anon key are correct
+- Check that your Supabase project is active
+- Ensure email authentication is enabled in your Supabase dashboard
+
+## Development Notes
+
+- The app uses TypeScript for better type safety
+- Supabase client is configured for authentication only in this phase
+- Navigation is handled with React Navigation v6
+- All screens are responsive and follow iOS/Android design guidelines
 
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+3. Make your changes
+4. Test on both Android and iOS
+5. Submit a pull request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
